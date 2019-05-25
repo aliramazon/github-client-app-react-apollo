@@ -16,7 +16,7 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-    const token = GITHUB_BASE_URL;
+    const token = process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
     return {
         headers: {
             ...headers,

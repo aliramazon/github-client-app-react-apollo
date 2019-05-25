@@ -4,3 +4,34 @@ body {
     line-height: 1.7;
     color: $colorPrimary;
 }
+
+h1 {
+    font-size: $sizeBig;
+}
+
+h2 {
+    font-size: $sizeMedium;
+}
+
+p {
+    font-size: $sizeSmall;
+}
+
+a,
+li,
+small,
+span {
+    font-size: $sizeXSmall;
+}
+
+a {
+    text-decoration: none;
+    color: $colorPurple;
+
+    &:active,
+    &:hover,
+    &:focus {
+        color: $colorPurple;
+    }
+
+}

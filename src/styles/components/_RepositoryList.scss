@@ -1,0 +1,24 @@
+.repository-item {
+    padding: 2rem;
+    border-bottom: .1rem solid $colorSecondary;
+
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+       
+        a {
+            font-size: $sizeMedium;
+        }
+
+    }
+
+    &__info {
+        font-size: $sizeSmall;
+        margin-bottom: $sizeSmall;
+    }
+
+    &__details {
+        font-size: $sizeSmall;
+    }
+}
