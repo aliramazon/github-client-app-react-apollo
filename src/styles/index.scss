@@ -2,6 +2,7 @@
 @import 'base/base';
 @import 'base/typography';
 
+@import 'components/App';
 @import 'components/Loading';
 @import 'components/RepositoryList';
-@import 'components/App';
+@import 'components/ErrorMessage';
