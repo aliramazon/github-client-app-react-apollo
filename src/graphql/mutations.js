@@ -10,3 +10,28 @@ export const STAR_REPOSITORY = gql`
         }
     }
 `;
+
+export const REMOVE_STAR = gql`
+    mutation($id: ID!) {
+        removeStar(input: { starrableId: $id }) {
+            starrable {
+                id
+                viewerHasStarred
+                stargazers {
+                    totalCount
+                }
+            }
+        }
+    }
+`;
+
+export const UPDATE_SUBSCRIPTION = gql`
+    mutation($id: ID!, $action: SubscriptionState!) {
+        updateSubscription(input: { subscribableId: $id, state: $action }) {
+            subscribable {
+                id
+                viewerSubscription
+            }
+        }
+    }
+`;

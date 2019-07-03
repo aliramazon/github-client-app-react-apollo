@@ -1,16 +1,15 @@
 .repository-item {
     padding: 2rem;
-    border-bottom: .1rem solid $colorSecondary;
+    border-bottom: 0.1rem solid $colorSecondary;
 
     &__title {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-       
+
         a {
             font-size: $sizeMedium;
         }
-
     }
 
     &__info {

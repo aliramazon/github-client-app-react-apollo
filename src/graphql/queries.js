@@ -3,12 +3,7 @@ import gql from 'graphql-tag';
 export const GET_REPOSITORIES_OF_CURRENT_USER = gql`
     {
         viewer {
-            repositories(
-                first: 5
-                orderBy: {
-                    direction: DESC, field: STARGAZERS
-                }
-            ) {
+            repositories(first: 5, orderBy: { direction: DESC, field: STARGAZERS }) {
                 edges {
                     node {
                         id
@@ -21,12 +16,14 @@ export const GET_REPOSITORIES_OF_CURRENT_USER = gql`
                         owner {
                             login
                             url
-
                         }
                         stargazers {
                             totalCount
                         }
                         viewerHasStarred
+                        watchers {
+                            totalCount
+                        }
                         watchers {
                             totalCount
                         }
