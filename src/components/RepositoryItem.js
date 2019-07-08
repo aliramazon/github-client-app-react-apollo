@@ -3,7 +3,53 @@ import { Mutation } from 'react-apollo';
 import Link from './Link';
 import Button from './Button';
 import { STAR_REPOSITORY, REMOVE_STAR, UPDATE_SUBSCRIPTION } from '../graphql/mutations';
+import { REPOSITORY_FRAGMENT } from '../graphql/fragments';
 import { SUBSCRIBED, UNSUBSCRIBED } from '../constants/constants';
+
+const updateAddStar = (client, mutationResult) => {
+    const { id } = mutationResult.data.addStar.starrable;
+    const repository = client.readFragment({
+        id: `Repository:${id}`,
+        fragment: REPOSITORY_FRAGMENT
+    });
+
+    const totalCount = repository.stargazers.totalCount + 1;
+
+    client.writeFragment({
+        id: `Repository:${id}`,
+        fragment: REPOSITORY_FRAGMENT,
+        data: {
+            ...repository,
+            stargazers: {
+                ...repository.stargazers,
+                totalCount
+            }
+        }
+    });
+};
+
+const updateWatchers = (client, mutationResult) => {
+    const { id, viewerSubscription } = mutationResult.data.updateSubscription.subscribable;
+    const repository = client.readFragment({
+        id: `Repository:${id}`,
+        fragment: REPOSITORY_FRAGMENT
+    });
+
+    const oldCount = repository.watchers.totalCount;
+    const newCount = viewerSubscription === SUBSCRIBED ? oldCount + 1 : oldCount - 1;
+
+    client.writeFragment({
+        id: `Repository:${id}`,
+        fragment: REPOSITORY_FRAGMENT,
+        data: {
+            ...repository,
+            watchers: {
+                ...repository.watchers,
+                totalCount: newCount
+            }
+        }
+    });
+};
 
 const RepositoryItem = ({
     id,
@@ -17,7 +63,6 @@ const RepositoryItem = ({
     watchers,
     viewerSubscription
 }) => {
-    console.log('Repository id', id, viewerHasStarred, viewerSubscription, stargazers.totalCount);
     const watchType = viewerSubscription === SUBSCRIBED ? UNSUBSCRIBED : SUBSCRIBED;
     return (
         <div>
@@ -25,7 +70,7 @@ const RepositoryItem = ({
                 <Link href={url}>{name}</Link>
                 <div>
                     {!viewerHasStarred ? (
-                        <Mutation mutation={STAR_REPOSITORY} variables={{ id }}>
+                        <Mutation mutation={STAR_REPOSITORY} variables={{ id }} update={updateAddStar}>
                             {(addStar, { data, loading, error }) => (
                                 <Button onClick={addStar}>{stargazers.totalCount} | Star It</Button>
                             )}
@@ -37,7 +82,7 @@ const RepositoryItem = ({
                             )}
                         </Mutation>
                     )}
-                    <Mutation mutation={UPDATE_SUBSCRIPTION} variables={{ id, action: watchType }}>
+                    <Mutation mutation={UPDATE_SUBSCRIPTION} variables={{ id, action: watchType }} update={updateWatchers}>
                         {(updateSubscription, { data, loading, error }) => (
                             <Button onClick={updateSubscription}>
                                 {watchers.totalCount} | {viewerSubscription === SUBSCRIBED ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}
