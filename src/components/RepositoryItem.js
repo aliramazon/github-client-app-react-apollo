@@ -136,4 +136,10 @@ const RepositoryItem = ({
     );
 };
 
-export default memo(RepositoryItem);
+const isPropsEqual = (prevProps, nextProps) => {
+    return (
+        prevProps.viewerHasStarred === nextProps.viewerHasStarred && prevProps.viewerSubscription === nextProps.viewerSubscription
+    );
+};
+
+export default memo(RepositoryItem, isPropsEqual);
