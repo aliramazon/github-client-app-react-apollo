@@ -27,7 +27,6 @@ const updateAddStar = (client, mutationResult) => {
         }
     });
 };
-
 const updateWatchers = (client, mutationResult) => {
     const { id, viewerSubscription } = mutationResult.data.updateSubscription.subscribable;
     const repository = client.readFragment({
