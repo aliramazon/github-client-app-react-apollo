@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Mutation } from 'react-apollo';
 import Link from './Link';
 import Button from './Button';
@@ -70,7 +70,21 @@ const RepositoryItem = ({
                 <Link href={url}>{name}</Link>
                 <div>
                     {!viewerHasStarred ? (
-                        <Mutation mutation={STAR_REPOSITORY} variables={{ id }} update={updateAddStar}>
+                        <Mutation
+                            mutation={STAR_REPOSITORY}
+                            variables={{ id }}
+                            update={updateAddStar}
+                            optimisticResponse={{
+                                addStar: {
+                                    __typename: 'Mutation',
+                                    starrable: {
+                                        __typename: 'Repository',
+                                        id,
+                                        viewerHasStarred: !viewerHasStarred
+                                    }
+                                }
+                            }}
+                        >
                             {(addStar, { data, loading, error }) => (
                                 <Button onClick={addStar}>{stargazers.totalCount} | Star It</Button>
                             )}
@@ -82,10 +96,24 @@ const RepositoryItem = ({
                             )}
                         </Mutation>
                     )}
-                    <Mutation mutation={UPDATE_SUBSCRIPTION} variables={{ id, action: watchType }} update={updateWatchers}>
+                    <Mutation
+                        mutation={UPDATE_SUBSCRIPTION}
+                        variables={{ id, action: watchType }}
+                        update={updateWatchers}
+                        optimisticResponse={{
+                            updateSubscription: {
+                                __typename: 'Mutation',
+                                subscribable: {
+                                    __typename: 'Repository',
+                                    id,
+                                    viewerSubscription: watchType
+                                }
+                            }
+                        }}
+                    >
                         {(updateSubscription, { data, loading, error }) => (
                             <Button onClick={updateSubscription}>
-                                {watchers.totalCount} | {viewerSubscription === SUBSCRIBED ? 'UNSUBSCRIBE' : 'SUBSCRIBE'}
+                                {watchers.totalCount} | {viewerSubscription === SUBSCRIBED ? SUBSCRIBED : UNSUBSCRIBED}
                             </Button>
                         )}
                     </Mutation>
@@ -109,4 +137,4 @@ const RepositoryItem = ({
     );
 };
 
-export default RepositoryItem;
+export default memo(RepositoryItem);
