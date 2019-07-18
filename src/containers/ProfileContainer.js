@@ -7,11 +7,18 @@ import { GET_REPOSITORIES_OF_CURRENT_USER } from '../graphql/queries';
 
 const ProfileContainer = () => {
     return (
-        <Query query={GET_REPOSITORIES_OF_CURRENT_USER}>
-            {({ loading, error, data }) => {
+        <Query query={GET_REPOSITORIES_OF_CURRENT_USER} notifyOnNetworkStatusChange={true}>
+            {({ loading, error, data, fetchMore }) => {
                 if (error) return <ErrorMessage error={error} />;
-                if (loading) return <Loading />;
-                return <RepositoryList repositories={data.viewer.repositories} />;
+                if (loading && !data.viewer) return <Loading />;
+                console.log(data);
+                return (
+                    <RepositoryList
+                        repositories={data.viewer.repositories}
+                        fetchMore={fetchMore}
+                        loading={loading}
+                    />
+                );
             }}
         </Query>
     );

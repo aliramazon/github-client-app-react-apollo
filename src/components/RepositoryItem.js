@@ -91,7 +91,9 @@ const RepositoryItem = ({
                     ) : (
                         <Mutation mutation={REMOVE_STAR} variables={{ id }}>
                             {(removeStar, { data, loading, error }) => (
-                                <Button onClick={removeStar}>{stargazers.totalCount} | Unstar It</Button>
+                                <Button onClick={removeStar}>
+                                    {stargazers.totalCount} | Unstar It
+                                </Button>
                             )}
                         </Mutation>
                     )}
@@ -112,14 +114,18 @@ const RepositoryItem = ({
                     >
                         {(updateSubscription, { data, loading, error }) => (
                             <Button onClick={updateSubscription}>
-                                {watchers.totalCount} | {viewerSubscription === SUBSCRIBED ? SUBSCRIBED : UNSUBSCRIBED}
+                                {watchers.totalCount} |{' '}
+                                {viewerSubscription === SUBSCRIBED ? SUBSCRIBED : UNSUBSCRIBED}
                             </Button>
                         )}
                     </Mutation>
                 </div>
             </div>
             <div className="repository-item__description">
-                <div className="repository-item__info" dangerouslySetInnerHTML={{ __html: descriptionHTML }} />
+                <div
+                    className="repository-item__info"
+                    dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+                />
                 <div className="repository-item__details">
                     <div>{primaryLanguage && <span>Language: {primaryLanguage.name}</span>}</div>
                     <div>
@@ -138,7 +144,8 @@ const RepositoryItem = ({
 
 const isPropsEqual = (prevProps, nextProps) => {
     return (
-        prevProps.viewerHasStarred === nextProps.viewerHasStarred && prevProps.viewerSubscription === nextProps.viewerSubscription
+        prevProps.viewerHasStarred === nextProps.viewerHasStarred &&
+        prevProps.viewerSubscription === nextProps.viewerSubscription
     );
 };
 
