@@ -1,7 +1,5 @@
 import React from 'react';
 import RepositoryItem from './RepositoryItem';
-import Button from './Button';
-import Loading from './Loading';
 import FetchMore from './FetchMore';
 
 const RepositoryList = ({ repositories, fetchMore, loading }) => {
