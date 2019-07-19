@@ -2,14 +2,42 @@
     width: 100rem;
     margin: 0 auto;
     padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    &__link {
-        display: inline-block;
-        margin-right: 1rem;
+    &__links {
+        a {
+            display: inline-block;
+            margin-right: 1rem;
+        }
     }
 
     .selected {
-        border-bottom: .2rem solid $colorPurple;
-        padding-bottom: .3rem;
+        border-bottom: 0.2rem solid $colorPurple;
+        padding-bottom: 0.3rem;
+    }
+
+    &__form {
+        input,
+        button {
+            outline: none;
+            border-radius: 0.3rem;
+            border: 1px solid $colorPurple;
+            font-size: 1rem;
+        }
+        input {
+            width: 30rem;
+            font-family: 'Poppins', sans-serif;
+            padding: 0.5rem;
+        }
+
+        button {
+            background-color: $colorPurple;
+            color: #fff;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            padding: 0.65rem;
+        }
     }
 }

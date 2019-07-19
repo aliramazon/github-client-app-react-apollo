@@ -1,18 +1,29 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import OrganizationSearch from './OrganizationSearch';
 import { ORGANIZATION, PROFILE } from '../constants/constants';
 
-const Navigation = () => {
+const Navigation = ({ location: { pathname }, organizationName, setOrgName }) => {
     return (
-        <nav className="navigation">
-            <div className="navigation__link">
-                <NavLink exact to={ORGANIZATION} activeClassName="selected">Organization</NavLink>
+        <header className="navigation">
+            <div className="navigation__links">
+                <NavLink exact to={ORGANIZATION} activeClassName="selected">
+                    Organization
+                </NavLink>
+                <NavLink exact to={PROFILE} activeClassName="selected">
+                    Profile
+                </NavLink>
             </div>
-            <div className="navigation__link">
-                <NavLink exact to={PROFILE} activeClassName="selected">Profile</NavLink>
-            </div>
-        </nav>
-    )
-}
+            {pathname === ORGANIZATION && (
+                <div className="navigation__form">
+                    <OrganizationSearch
+                        organizationName={organizationName}
+                        setOrgName={setOrgName}
+                    />
+                </div>
+            )}
+        </header>
+    );
+};
 
-export default Navigation;
+export default withRouter(Navigation);

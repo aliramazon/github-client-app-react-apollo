@@ -11,12 +11,12 @@ const ProfileContainer = () => {
             {({ loading, error, data, fetchMore }) => {
                 if (error) return <ErrorMessage error={error} />;
                 if (loading && !data.viewer) return <Loading />;
-                console.log(data);
                 return (
                     <RepositoryList
                         repositories={data.viewer.repositories}
                         fetchMore={fetchMore}
                         loading={loading}
+                        entry={'viewer'}
                     />
                 );
             }}
