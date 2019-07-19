@@ -1,0 +1,15 @@
+.navigation {
+    width: 100rem;
+    margin: 0 auto;
+    padding: 2rem;
+
+    &__link {
+        display: inline-block;
+        margin-right: 1rem;
+    }
+
+    .selected {
+        border-bottom: .2rem solid $colorPurple;
+        padding-bottom: .3rem;
+    }
+}
