@@ -25,7 +25,7 @@ const Issues = ({ repositoryOwner, repositoryName }) => {
                     query={GET_ISSUES_OF_REPOSITORY}
                     variables={{ repositoryOwner, repositoryName, issueState }}
                 >
-                    {({ data, loading, error }) => {
+                    {({ data, loading, error, fetchMore }) => {
                         if (error) return <ErrorMessage error={error} />;
                         const { repository } = data;
 
@@ -36,7 +36,13 @@ const Issues = ({ repositoryOwner, repositoryName }) => {
                         if (!repository.issues.edges.length) {
                             return <div className="issues__empty">No Issues...</div>;
                         }
-                        return <IssueList issues={repository.issues} />;
+                        return (
+                            <IssueList
+                                issues={repository.issues}
+                                fetchMore={fetchMore}
+                                loading={loading}
+                            />
+                        );
                     }}
                 </Query>
             )}

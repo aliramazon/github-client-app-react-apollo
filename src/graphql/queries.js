@@ -44,9 +44,14 @@ export const GET_REPOSITORIES_OF_ORGANIZATION = gql`
 `;
 
 export const GET_ISSUES_OF_REPOSITORY = gql`
-    query($repositoryOwner: String!, $repositoryName: String!, $issueState: IssueState!) {
+    query(
+        $repositoryOwner: String!
+        $repositoryName: String!
+        $issueState: IssueState!
+        $cursor: String
+    ) {
         repository(name: $repositoryName, owner: $repositoryOwner) {
-            issues(first: 5, states: [$issueState]) {
+            issues(first: 6, states: [$issueState], after: $cursor) {
                 edges {
                     node {
                         id
@@ -56,6 +61,10 @@ export const GET_ISSUES_OF_REPOSITORY = gql`
                         url
                         bodyHTML
                     }
+                }
+                pageInfo {
+                    endCursor
+                    hasNextPage
                 }
             }
         }

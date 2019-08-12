@@ -17,12 +17,12 @@ const OrganizationContainer = ({ organizationName }) => {
                 const { organization } = data;
                 if (error) return <ErrorMessage error={error} />;
                 if (loading && !organization) return <Loading />;
-                console.log(data);
                 return (
                     <RepositoryList
                         repositories={organization.repositories}
                         fetchMore={fetchMore}
                         entry={'organization'}
+                        loading={loading}
                     />
                 );
             }}
