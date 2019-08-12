@@ -3,9 +3,10 @@ import { Query } from 'react-apollo';
 import ErrorMessage from '../components/ErrorMessage';
 import Loading from '../components/Loading';
 import IssueList from '../components/IssueList';
-import Button from '../components/Button';
+import IssueFilter from '../components/IssueFilter';
+
 import { GET_ISSUES_OF_REPOSITORY } from '../graphql/queries';
-import { NONE, TRANSITION_LABELS, TRANSITION_STATE } from '../constants/constants';
+import { NONE } from '../constants/constants';
 
 const Issues = ({ repositoryOwner, repositoryName }) => {
     const [issueState, setIssueState] = useState(NONE);
@@ -17,9 +18,8 @@ const Issues = ({ repositoryOwner, repositoryName }) => {
     };
     return (
         <div className="issues">
-            <Button onClick={() => onChangeIssueState(TRANSITION_STATE[issueState])}>
-                {TRANSITION_LABELS[issueState]}
-            </Button>
+            <IssueFilter issueState={issueState} onChangeIssueState={onChangeIssueState} />
+
             {isShow(issueState) && (
                 <Query
                     query={GET_ISSUES_OF_REPOSITORY}
