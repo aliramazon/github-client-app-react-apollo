@@ -18,7 +18,12 @@ const Issues = ({ repositoryOwner, repositoryName }) => {
     };
     return (
         <div className="issues">
-            <IssueFilter issueState={issueState} onChangeIssueState={onChangeIssueState} />
+            <IssueFilter
+                issueState={issueState}
+                onChangeIssueState={onChangeIssueState}
+                repositoryName={repositoryName}
+                repositoryOwner={repositoryOwner}
+            />
 
             {isShow(issueState) && (
                 <Query
